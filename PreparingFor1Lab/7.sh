@@ -5,13 +5,7 @@ if [ -e "$1" ]
 then
 	file="$1"
 	exe="$2"
-	if  gcc "$file" -o "$exe"
-	then
-		./"$exe"
-	else
-		echo "Compilation error">&2
-		exit
-	fi
+	gcc "$file" -o "$exe" && ./"$exe"
 
 else
 	echo "Syntax error:check if your file $1 exists">&2
