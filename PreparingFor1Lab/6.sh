@@ -5,9 +5,8 @@ then
 		output=$1
 		path=$2
 		ext=$3
-		cd $path
 		exec 1>$output
-		find . -type f -name "*"$ext|sort
+		find "$path" -type f -name "*"$ext|sort
 	else
 		echo "syntax error;make shure you wrote correct path|filename|extension">&2
 	fi

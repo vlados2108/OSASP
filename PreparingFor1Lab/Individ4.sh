@@ -6,32 +6,20 @@ then
 	then
 		dir1="$1"
 		dir2="$2"
-		ls $dir1/ > 444
-		ls $dir2/ > 555
-		count1=`cat 444 | wc -l`
-		count2=`cat 555 | wc -l`
-		for i in $(seq 1 $count1)
+		for i in $dir1/*
 		do
-			var1=`sed -n $i"p" 444`
-			pathfile1="$dir1/$var1"
-			for j in $(seq 1 $count2)
+			for j in $dir2/*
 			do
-				var2=`sed -n $j"p" 555`
-				pathfile2="$dir2/$var2"
-				cmp -s "$pathfile1" "$pathfile2" 
-				if [ $? -eq 0 ]
-				then
-					echo "$var2 == $var2"
+				if [[ -f $i && -f $j ]]; then
+					cmp -s $i $j && echo "$i == $j"
 				fi
 			done
 		done
-		rm -f 444 555		
+		echo "Files were viewed: $(( `find $dir1 -maxdepth 1 -type f | wc -l`+`find $dir2 -maxdepth 1 -type f| wc -l`))"
 	else
 		echo "Check if you wrote correct path's">&2
 	fi
 else
-	echo "not enough actual parametrs">&2
-	echo "1 param -  first catalog">&2
-	echo "2 param - second catalog">&2
+	echo -e "not enough actual parametrs\n1 param - first catalog\n2 param - second catalog">&2
 fi
 
