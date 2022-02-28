@@ -6,13 +6,11 @@ then
 	then
 		dir1="$1"
 		dir2="$2"
-		for i in $dir1/*
+		for i in `find $dir1 -maxdepth 1 -type f`
 		do
-			for j in $dir2/*
+			for j in `find $dir2 -maxdepth 1 -type f`
 			do
-				if [[ -f $i && -f $j ]]; then
-					cmp -s $i $j && echo "$i == $j"
-				fi
+				cmp -s $i $j && echo "$i == $j"
 			done
 		done
 		echo "Files were viewed: $(( `find $dir1 -maxdepth 1 -type f | wc -l`+`find $dir2 -maxdepth 1 -type f| wc -l`))"
